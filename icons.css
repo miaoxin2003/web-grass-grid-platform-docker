@@ -1,0 +1,285 @@
+/* 自定义图标样式 */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-right: 0.5em;
+}
+
+/* 设备类型图标 */
+.icon-excavator::before {
+    content: '🚜';
+    font-size: 1.2em;
+}
+
+.icon-truck::before {
+    content: '🚛';
+    font-size: 1.2em;
+}
+
+.icon-spreader::before {
+    content: '🏗️';
+    font-size: 1.2em;
+}
+
+.icon-compactor::before {
+    content: '⚙️';
+    font-size: 1.2em;
+}
+
+/* 状态图标 */
+.icon-online::before {
+    content: '🟢';
+    animation: pulse 2s infinite;
+}
+
+.icon-offline::before {
+    content: '🔴';
+    opacity: 0.7;
+}
+
+.icon-warning::before {
+    content: '🟡';
+    animation: blink 1s infinite;
+}
+
+/* 功能图标 */
+.icon-temperature::before {
+    content: '🌡️';
+}
+
+.icon-battery::before {
+    content: '🔋';
+}
+
+.icon-signal::before {
+    content: '📶';
+}
+
+.icon-gps::before {
+    content: '🛰️';
+}
+
+.icon-chart::before {
+    content: '📊';
+}
+
+.icon-settings::before {
+    content: '⚙️';
+}
+
+.icon-alert::before {
+    content: '⚠️';
+    color: #ffaa00;
+}
+
+.icon-success::before {
+    content: '✅';
+    color: #00ff88;
+}
+
+.icon-error::before {
+    content: '❌';
+    color: #ff4444;
+}
+
+/* 材料图标 */
+.icon-sand::before {
+    content: '🏖️';
+}
+
+.icon-cement::before {
+    content: '🏗️';
+}
+
+.icon-stone::before {
+    content: '🪨';
+}
+
+.icon-water::before {
+    content: '💧';
+}
+
+.icon-additive::before {
+    content: '🧪';
+}
+
+/* 天气图标 */
+.icon-wind::before {
+    content: '💨';
+}
+
+.icon-sun::before {
+    content: '☀️';
+}
+
+.icon-cloud::before {
+    content: '☁️';
+}
+
+.icon-rain::before {
+    content: '🌧️';
+}
+
+/* 动画效果 */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.icon-loading::before {
+    content: '⚙️';
+    animation: rotate 1s linear infinite;
+}
+
+/* 3D效果图标 */
+.icon-3d {
+    text-shadow: 
+        1px 1px 0 rgba(0, 0, 0, 0.5),
+        2px 2px 0 rgba(0, 0, 0, 0.3),
+        3px 3px 0 rgba(0, 0, 0, 0.1);
+    transform: perspective(100px) rotateX(15deg);
+}
+
+/* 发光效果图标 */
+.icon-glow::before {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px currentColor,
+        0 0 15px currentColor;
+}
+
+/* 大小变体 */
+.icon-small {
+    font-size: 0.8em;
+}
+
+.icon-large {
+    font-size: 1.5em;
+}
+
+.icon-xl {
+    font-size: 2em;
+}
+
+/* 颜色变体 */
+.icon-primary::before {
+    color: #00d4ff;
+}
+
+.icon-secondary::before {
+    color: #0099cc;
+}
+
+.icon-success::before {
+    color: #00ff88;
+}
+
+.icon-warning::before {
+    color: #ffaa00;
+}
+
+.icon-danger::before {
+    color: #ff4444;
+}
+
+.icon-info::before {
+    color: #a0c4ff;
+}
+
+/* 悬停效果 */
+.icon-hover:hover::before {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+.icon-bounce:hover::before {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    80% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 特殊效果 */
+.icon-pulse::before {
+    animation: pulse 2s infinite;
+}
+
+.icon-shake:hover::before {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* 组合图标 */
+.icon-combo {
+    position: relative;
+}
+
+.icon-combo::after {
+    content: attr(data-badge);
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* 响应式图标 */
+@media (max-width: 768px) {
+    .icon {
+        font-size: 0.9em;
+    }
+    
+    .icon-large {
+        font-size: 1.3em;
+    }
+    
+    .icon-xl {
+        font-size: 1.8em;
+    }
+}
+
+/* 无障碍支持 */
+.icon[aria-label]::before {
+    speak: none;
+}
+
+.icon-hidden {
+    visibility: hidden;
+}
+
+/* 打印样式 */
+@media print {
+    .icon::before {
+        color: black !important;
+        text-shadow: none !important;
+    }
+}

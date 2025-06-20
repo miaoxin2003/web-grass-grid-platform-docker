@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据监控面板 - 沙漠铺设设备云平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 顶部导航 -->
+        <header class="dashboard-header">
+            <div class="nav-left">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-left"></i> 返回主页
+                </button>
+            </div>
+            <h1>数据监控面板</h1>
+            <div class="nav-right">
+                <span id="dashboard-time"></span>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="dashboard-main">
+            <!-- 第一行：关键指标 -->
+            <section class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>设备总数</h3>
+                        <div class="metric-value">24</div>
+                        <div class="metric-change positive">+2 今日</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>运行设备</h3>
+                        <div class="metric-value">18</div>
+                        <div class="metric-change positive">75% 运行率</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>告警数量</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-change negative">-1 今日</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>工作效率</h3>
+                        <div class="metric-value">92%</div>
+                        <div class="metric-change positive">+5% 本周</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第二行：图表区域 -->
+            <section class="charts-row">
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>原料余量统计</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn active" data-period="day">日</button>
+                            <button class="control-btn" data-period="week">周</button>
+                            <button class="control-btn" data-period="month">月</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="materialChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>风速监测</h3>
+                        <div class="status-indicator">
+                            <span class="device-indicator online"></span>
+                            实时监测中
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="windChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第三行：设备状态和导航 -->
+            <section class="status-row">
+                <div class="status-panel">
+                    <div class="panel-header">
+                        <h3>设备状态监控</h3>
+                        <button class="refresh-btn">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="device-grid">
+                        <div class="device-item" data-device="1">
+                            <div class="device-info">
+                                <span class="device-indicator online"></span>
+                                <span class="device-name">挖掘机-01</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>电量: 85%</span>
+                                <span>温度: 28°C</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="2">
+                            <div class="device-info">
+                                <span class="device-indicator warning"></span>
+                                <span class="device-name">运输车-02</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>电量: 45%</span>
+                                <span>温度: 35°C</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="3">
+                            <div class="device-info">
+                                <span class="device-indicator online"></span>
+                                <span class="device-name">铺设机-03</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>电量: 92%</span>
+                                <span>温度: 26°C</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="4">
+                            <div class="device-info">
+                                <span class="device-indicator offline"></span>
+                                <span class="device-name">压实机-04</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>电量: 0%</span>
+                                <span>温度: --</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation-panel">
+                    <div class="panel-header">
+                        <h3>设备导航</h3>
+                        <div class="gps-status">
+                            <i class="fas fa-satellite-dish"></i>
+                            GPS信号良好
+                        </div>
+                    </div>
+                    <div class="navigation-map">
+                        <canvas id="navigationChart"></canvas>
+                    </div>
+                    <div class="navigation-controls">
+                        <button class="nav-btn">
+                            <i class="fas fa-crosshairs"></i>
+                            定位设备
+                        </button>
+                        <button class="nav-btn">
+                            <i class="fas fa-route"></i>
+                            规划路径
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第四行：实时日志 -->
+            <section class="logs-row">
+                <div class="logs-panel">
+                    <div class="panel-header">
+                        <h3>系统日志</h3>
+                        <div class="log-controls">
+                            <select id="logLevel">
+                                <option value="all">所有级别</option>
+                                <option value="info">信息</option>
+                                <option value="warning">警告</option>
+                                <option value="error">错误</option>
+                            </select>
+                            <button class="clear-logs-btn">清空日志</button>
+                        </div>
+                    </div>
+                    <div class="logs-container" id="logsContainer">
+                        <div class="log-entry info">
+                            <span class="log-time">14:32:15</span>
+                            <span class="log-level">INFO</span>
+                            <span class="log-message">设备挖掘机-01启动成功</span>
+                        </div>
+                        <div class="log-entry warning">
+                            <span class="log-time">14:31:42</span>
+                            <span class="log-level">WARN</span>
+                            <span class="log-message">运输车-02电量低于50%</span>
+                        </div>
+                        <div class="log-entry info">
+                            <span class="log-time">14:30:18</span>
+                            <span class="log-level">INFO</span>
+                            <span class="log-message">系统自检完成，所有模块正常</span>
+                        </div>
+                        <div class="log-entry error">
+                            <span class="log-time">14:28:55</span>
+                            <span class="log-level">ERROR</span>
+                            <span class="log-message">压实机-04通信中断</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notification" class="notification"></div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
