@@ -31,45 +31,67 @@
             <section class="metrics-row">
                 <div class="metric-card">
                     <div class="metric-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>草方格完成</h3>
+                        <div class="metric-value">1,250</div>
+                        <div class="metric-change positive">+85 今日</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <div class="metric-content">
-                        <h3>设备总数</h3>
-                        <div class="metric-value">24</div>
-                        <div class="metric-change positive">+2 今日</div>
+                        <h3>设备运行</h3>
+                        <div class="metric-value">6/6</div>
+                        <div class="metric-change positive">100% 运行率</div>
                     </div>
                 </div>
 
                 <div class="metric-card">
                     <div class="metric-icon">
-                        <i class="fas fa-play-circle"></i>
+                        <i class="fas fa-chart-area"></i>
                     </div>
                     <div class="metric-content">
-                        <h3>运行设备</h3>
-                        <div class="metric-value">18</div>
-                        <div class="metric-change positive">75% 运行率</div>
+                        <h3>铺设面积</h3>
+                        <div class="metric-value">1,250</div>
+                        <div class="metric-change positive">m² 今日</div>
                     </div>
                 </div>
 
                 <div class="metric-card">
                     <div class="metric-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-percentage"></i>
                     </div>
                     <div class="metric-content">
-                        <h3>告警数量</h3>
-                        <div class="metric-value">3</div>
-                        <div class="metric-change negative">-1 今日</div>
+                        <h3>项目进度</h3>
+                        <div class="metric-value">68%</div>
+                        <div class="metric-change positive">+3% 本周</div>
                     </div>
                 </div>
 
                 <div class="metric-card">
                     <div class="metric-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-leaf"></i>
                     </div>
                     <div class="metric-content">
-                        <h3>工作效率</h3>
-                        <div class="metric-value">92%</div>
-                        <div class="metric-change positive">+5% 本周</div>
+                        <h3>草料消耗</h3>
+                        <div class="metric-value">3.2</div>
+                        <div class="metric-change neutral">吨 今日</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>固沙效果</h3>
+                        <div class="metric-value">95%</div>
+                        <div class="metric-change positive">优秀</div>
                     </div>
                 </div>
             </section>
@@ -78,7 +100,7 @@
             <section class="charts-row">
                 <div class="chart-panel">
                     <div class="panel-header">
-                        <h3>原料余量统计</h3>
+                        <h3>草方格材料库存</h3>
                         <div class="panel-controls">
                             <button class="control-btn active" data-period="day">日</button>
                             <button class="control-btn" data-period="week">周</button>
@@ -92,7 +114,7 @@
 
                 <div class="chart-panel">
                     <div class="panel-header">
-                        <h3>风速监测</h3>
+                        <h3>环境风速监测</h3>
                         <div class="status-indicator">
                             <span class="device-indicator online"></span>
                             实时监测中
@@ -104,7 +126,36 @@
                 </div>
             </section>
 
-            <!-- 第三行：设备状态和导航 -->
+            <!-- 第三行：铺设进度图表 -->
+            <section class="charts-row">
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>草方格铺设进度</h3>
+                        <div class="status-indicator">
+                            <span class="device-indicator online"></span>
+                            进行中
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>设备效率分析</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn active" data-analysis="efficiency">效率</button>
+                            <button class="control-btn" data-analysis="usage">使用率</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第四行：设备状态和导航 -->
             <section class="status-row">
                 <div class="status-panel">
                     <div class="panel-header">
@@ -117,33 +168,66 @@
                         <div class="device-item" data-device="1">
                             <div class="device-info">
                                 <span class="device-indicator online"></span>
-                                <span class="device-name">挖掘机-01</span>
+                                <span class="device-name">草料铺设机-01</span>
                             </div>
                             <div class="device-stats">
                                 <span>电量: 85%</span>
-                                <span>温度: 28°C</span>
+                                <span>效率: 92%</span>
                             </div>
                         </div>
 
                         <div class="device-item" data-device="2">
                             <div class="device-info">
-                                <span class="device-indicator warning"></span>
-                                <span class="device-name">运输车-02</span>
+                                <span class="device-indicator online"></span>
+                                <span class="device-name">材料运输车-02</span>
                             </div>
                             <div class="device-stats">
-                                <span>电量: 45%</span>
-                                <span>温度: 35°C</span>
+                                <span>载重: 75%</span>
+                                <span>燃油: 68%</span>
                             </div>
                         </div>
 
                         <div class="device-item" data-device="3">
                             <div class="device-info">
                                 <span class="device-indicator online"></span>
-                                <span class="device-name">铺设机-03</span>
+                                <span class="device-name">方格制作机-03</span>
                             </div>
                             <div class="device-stats">
-                                <span>电量: 92%</span>
-                                <span>温度: 26°C</span>
+                                <span>精度: 98%</span>
+                                <span>速度: 3.2m/min</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="4">
+                            <div class="device-info">
+                                <span class="device-indicator warning"></span>
+                                <span class="device-name">压实机-04</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>压力: 150kPa</span>
+                                <span>温度: 35°C</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="5">
+                            <div class="device-info">
+                                <span class="device-indicator online"></span>
+                                <span class="device-name">监控车-05</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>覆盖: 95%</span>
+                                <span>信号: 强</span>
+                            </div>
+                        </div>
+
+                        <div class="device-item" data-device="6">
+                            <div class="device-info">
+                                <span class="device-indicator online"></span>
+                                <span class="device-name">洒水车-06</span>
+                            </div>
+                            <div class="device-stats">
+                                <span>水位: 80%</span>
+                                <span>水压: 75bar</span>
                             </div>
                         </div>
 

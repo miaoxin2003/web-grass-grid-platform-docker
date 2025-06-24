@@ -99,6 +99,10 @@
     color: #ff4444;
 }
 
+.metric-change.neutral {
+    color: #a0c4ff;
+}
+
 /* 图表行 */
 .charts-row {
     display: grid;

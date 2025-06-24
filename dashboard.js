@@ -1,5 +1,5 @@
 // 仪表板JavaScript
-let materialChart, windChart, navigationChart;
+let materialChart, windChart, navigationChart, progressChart, efficiencyChart;
 let logUpdateInterval, dataUpdateInterval;
 
 // 初始化仪表板
@@ -35,31 +35,33 @@ function createCharts() {
     createMaterialChart();
     createWindChart();
     createNavigationChart();
+    createProgressChart();
+    createEfficiencyChart();
 }
 
-// 创建原料余量图表
+// 创建草方格材料库存图表
 function createMaterialChart() {
     const ctx = document.getElementById('materialChart').getContext('2d');
     materialChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['沙子', '水泥', '石料', '添加剂', '水'],
+            labels: ['麦草', '稻草', '芦苇', '固定桩', '铁丝网'],
             datasets: [{
-                label: '余量 (吨)',
-                data: [120, 85, 95, 45, 200],
+                label: '库存 (吨)',
+                data: [85, 120, 65, 200, 45],
                 backgroundColor: [
-                    'rgba(0, 212, 255, 0.8)',
-                    'rgba(0, 255, 136, 0.8)',
-                    'rgba(255, 170, 0, 0.8)',
-                    'rgba(255, 68, 68, 0.8)',
-                    'rgba(138, 43, 226, 0.8)'
+                    'rgba(139, 69, 19, 0.8)',    // 棕色 - 麦草
+                    'rgba(255, 215, 0, 0.8)',    // 金色 - 稻草
+                    'rgba(34, 139, 34, 0.8)',    // 绿色 - 芦苇
+                    'rgba(105, 105, 105, 0.8)',  // 灰色 - 固定桩
+                    'rgba(70, 130, 180, 0.8)'    // 钢蓝色 - 铁丝网
                 ],
                 borderColor: [
-                    '#00d4ff',
-                    '#00ff88',
-                    '#ffaa00',
-                    '#ff4444',
-                    '#8a2be2'
+                    '#8B4513',
+                    '#FFD700',
+                    '#228B22',
+                    '#696969',
+                    '#4682B4'
                 ],
                 borderWidth: 2,
                 borderRadius: 8
@@ -222,6 +224,165 @@ function createNavigationChart() {
     });
 }
 
+// 创建草方格铺设进度图表
+function createProgressChart() {
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    
+    // 生成过去7天的进度数据
+    const labels = [];
+    const progressData = [];
+    const targetData = [];
+    
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        labels.push(date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' }));
+        
+        // 模拟累积进度数据
+        const baseProgress = 50 + i * 3;
+        progressData.push(baseProgress + Math.random() * 5);
+        targetData.push(baseProgress + 5); // 目标进度稍高
+    }
+    
+    progressChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '实际进度 (%)',
+                data: progressData,
+                borderColor: '#00ff88',
+                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#00ff88',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }, {
+                label: '计划进度 (%)',
+                data: targetData,
+                borderColor: '#ffaa00',
+                backgroundColor: 'rgba(255, 170, 0, 0.1)',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                fill: false,
+                tension: 0.4,
+                pointBackgroundColor: '#ffaa00',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#a0c4ff'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(0, 212, 255, 0.2)'
+                    },
+                    ticks: {
+                        color: '#a0c4ff',
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0, 212, 255, 0.2)'
+                    },
+                    ticks: {
+                        color: '#a0c4ff'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// 创建设备效率分析图表
+function createEfficiencyChart() {
+    const ctx = document.getElementById('efficiencyChart').getContext('2d');
+    
+    efficiencyChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['草料铺设机', '材料运输车', '方格制作机', '压实机', '监控车', '洒水车'],
+            datasets: [{
+                label: '工作效率 (%)',
+                data: [92, 88, 95, 85, 98, 90],
+                backgroundColor: 'rgba(0, 212, 255, 0.2)',
+                borderColor: '#00d4ff',
+                borderWidth: 2,
+                pointBackgroundColor: '#00d4ff',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }, {
+                label: '设备利用率 (%)',
+                data: [85, 92, 88, 78, 95, 87],
+                backgroundColor: 'rgba(0, 255, 136, 0.2)',
+                borderColor: '#00ff88',
+                borderWidth: 2,
+                pointBackgroundColor: '#00ff88',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#a0c4ff'
+                    }
+                }
+            },
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(0, 212, 255, 0.2)'
+                    },
+                    angleLines: {
+                        color: 'rgba(0, 212, 255, 0.2)'
+                    },
+                    pointLabels: {
+                        color: '#a0c4ff',
+                        font: {
+                            size: 11
+                        }
+                    },
+                    ticks: {
+                        color: '#a0c4ff',
+                        backdropColor: 'transparent',
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 // 设置事件监听器
 function setupEventListeners() {
     // 时间段控制按钮
@@ -297,31 +458,49 @@ function updateRealTimeData() {
 function updateMetricCards() {
     const metrics = document.querySelectorAll('.metric-value');
     metrics.forEach((metric, index) => {
-        const currentValue = parseInt(metric.textContent);
+        const currentValue = parseFloat(metric.textContent.replace(/[^\d.]/g, ''));
         let newValue;
+        let suffix = '';
         
         switch(index) {
-            case 0: // 设备总数
-                newValue = currentValue + (Math.random() > 0.9 ? 1 : 0);
+            case 0: // 草方格完成
+                newValue = Math.min(2000, currentValue + Math.random() * 3);
+                metric.textContent = Math.floor(newValue);
                 break;
-            case 1: // 运行设备
-                newValue = Math.max(0, currentValue + (Math.random() > 0.7 ? 1 : -1));
+            case 1: // 设备运行
+                // 保持6/6不变，偶尔变化
+                if (Math.random() > 0.95) {
+                    const running = Math.floor(Math.random() * 2) + 5; // 5-6
+                    metric.textContent = `${running}/6`;
+                } else {
+                    metric.textContent = '6/6';
+                }
                 break;
-            case 2: // 告警数量
-                newValue = Math.max(0, currentValue + (Math.random() > 0.8 ? 1 : -1));
+            case 2: // 铺设面积
+                newValue = Math.min(2000, currentValue + Math.random() * 3);
+                metric.textContent = Math.floor(newValue);
                 break;
-            case 3: // 工作效率
-                newValue = Math.min(100, Math.max(0, currentValue + (Math.random() - 0.5) * 2));
+            case 3: // 项目进度
+                newValue = Math.min(100, currentValue + Math.random() * 0.3);
+                metric.textContent = Math.floor(newValue) + '%';
+                break;
+            case 4: // 草料消耗
+                newValue = currentValue + Math.random() * 0.05;
+                metric.textContent = newValue.toFixed(1);
+                break;
+            case 5: // 固沙效果
+                newValue = Math.min(100, Math.max(90, currentValue + (Math.random() - 0.5) * 1));
+                metric.textContent = Math.floor(newValue) + '%';
                 break;
         }
         
-        if (newValue !== currentValue) {
-            metric.textContent = index === 3 ? newValue + '%' : newValue;
-            metric.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                metric.style.transform = '';
-            }, 300);
-        }
+        // 添加动画效果
+        metric.style.transform = 'scale(1.05)';
+        metric.style.color = '#00ff88';
+        setTimeout(() => {
+            metric.style.transform = '';
+            metric.style.color = '';
+        }, 500);
     });
 }
 

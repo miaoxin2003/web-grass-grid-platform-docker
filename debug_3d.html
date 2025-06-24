@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D问题诊断</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #333;
+            border-radius: 8px;
+            border-left: 4px solid #00d4ff;
+        }
+        .test-btn {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover {
+            background: #0099cc;
+        }
+        #log {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        #test-canvas {
+            border: 2px solid #00d4ff;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔧 3D问题诊断工具</h1>
+        
+        <div class="test-section">
+            <h3>1. Three.js 库检测</h3>
+            <button class="test-btn" onclick="testThreeJS()">检测 Three.js</button>
+            <div id="threejs-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. WebGL 支持检测</h3>
+            <button class="test-btn" onclick="testWebGL()">检测 WebGL</button>
+            <div id="webgl-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 基础3D测试</h3>
+            <button class="test-btn" onclick="testBasic3D()">创建基础3D场景</button>
+            <canvas id="test-canvas" width="400" height="300"></canvas>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 控制台日志</h3>
+            <button class="test-btn" onclick="clearLog()">清空日志</button>
+            <div id="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>5. 页面测试</h3>
+            <button class="test-btn" onclick="window.open('index_simple.html', '_blank')">测试简化版页面</button>
+            <button class="test-btn" onclick="window.open('index.html', '_blank')">测试完整版页面</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 重写console.log来显示在页面上
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToLog(message, type = 'log') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#f00' : type === 'warn' ? '#fa0' : '#0f0';
+            logDiv.innerHTML += `<span style="color: ${color}">[${timestamp}] ${type.toUpperCase()}: ${message}</span>\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToLog(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToLog(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToLog(args.join(' '), 'warn');
+        };
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function testThreeJS() {
+            const statusDiv = document.getElementById('threejs-status');
+            if (typeof THREE !== 'undefined') {
+                statusDiv.innerHTML = `<span style="color: #0f0">✓ Three.js 已加载，版本: ${THREE.REVISION}</span>`;
+                console.log('Three.js 检测通过');
+            } else {
+                statusDiv.innerHTML = `<span style="color: #f00">✗ Three.js 未加载</span>`;
+                console.error('Three.js 未加载');
+            }
+        }
+
+        function testWebGL() {
+            const statusDiv = document.getElementById('webgl-status');
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            
+            if (gl) {
+                const info = {
+                    vendor: gl.getParameter(gl.VENDOR),
+                    renderer: gl.getParameter(gl.RENDERER),
+                    version: gl.getParameter(gl.VERSION)
+                };
+                statusDiv.innerHTML = `
+                    <span style="color: #0f0">✓ WebGL 支持</span><br>
+                    <small>供应商: ${info.vendor}<br>
+                    渲染器: ${info.renderer}<br>
+                    版本: ${info.version}</small>
+                `;
+                console.log('WebGL 检测通过', info);
+            } else {
+                statusDiv.innerHTML = `<span style="color: #f00">✗ WebGL 不支持</span>`;
+                console.error('WebGL 不支持');
+            }
+        }
+
+        function testBasic3D() {
+            console.log('开始基础3D测试...');
+            
+            try {
+                const canvas = document.getElementById('test-canvas');
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x87CEEB);
+                
+                const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+                camera.position.z = 5;
+                
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+                renderer.setSize(canvas.width, canvas.height);
+                
+                // 创建一个简单的立方体
+                const geometry = new THREE.BoxGeometry();
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+                
+                // 渲染
+                function animate() {
+                    requestAnimationFrame(animate);
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                console.log('基础3D场景创建成功');
+                
+            } catch (error) {
+                console.error('基础3D测试失败:', error);
+            }
+        }
+
+        // 页面加载完成后自动运行检测
+        window.addEventListener('load', function() {
+            console.log('页面加载完成，开始自动检测...');
+            setTimeout(() => {
+                testThreeJS();
+                testWebGL();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
