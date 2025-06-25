@@ -1,0 +1,161 @@
+{
+  "environmentData": {
+    "temperature": {
+      "current": 28.5,
+      "history": [26.2, 27.1, 28.5, 29.3, 30.1, 28.9, 27.8, 26.5, 25.9, 27.2, 28.5, 29.8],
+      "unit": "°C",
+      "range": [20, 45]
+    },
+    "humidity": {
+      "current": 45.2,
+      "history": [42.1, 43.5, 45.2, 46.8, 48.3, 47.1, 44.9, 43.2, 41.8, 44.5, 45.2, 47.6],
+      "unit": "%",
+      "range": [30, 70]
+    },
+    "windSpeed": {
+      "current": 12.3,
+      "history": [8.5, 9.2, 12.3, 15.1, 18.2, 16.8, 14.5, 11.2, 9.8, 10.5, 12.3, 14.7],
+      "unit": "km/h",
+      "range": [0, 25]
+    },
+    "sandDensity": {
+      "current": 1.85,
+      "history": [1.72, 1.78, 1.85, 1.91, 1.96, 1.88, 1.82, 1.75, 1.69, 1.76, 1.85, 1.93],
+      "unit": "g/cm³",
+      "range": [1.5, 2.2]
+    },
+    "visibility": {
+      "current": 8.5,
+      "history": [6.2, 7.1, 8.5, 9.3, 10.1, 8.9, 7.8, 6.5, 5.9, 7.2, 8.5, 9.8],
+      "unit": "km",
+      "range": [0, 15]
+    }
+  },
+  "equipmentData": {
+    "grassLayingMachine": {
+      "efficiency": 92,
+      "batteryLevel": 85,
+      "workingHours": 6.5,
+      "grassConsumption": 3.2,
+      "coverageArea": 1250,
+      "status": "working",
+      "coordinates": [108.2, 39.1]
+    },
+    "transportVehicle": {
+      "efficiency": 88,
+      "fuelLevel": 68,
+      "loadCapacity": 75,
+      "distanceTraveled": 45.2,
+      "status": "working",
+      "coordinates": [108.3, 39.2]
+    },
+    "gridMaker": {
+      "efficiency": 95,
+      "precision": 98,
+      "speed": 3.2,
+      "gridCount": 450,
+      "status": "working",
+      "coordinates": [108.1, 39.0]
+    },
+    "compactor": {
+      "efficiency": 85,
+      "pressure": 150,
+      "temperature": 35,
+      "compactionRate": 88,
+      "status": "warning",
+      "coordinates": [108.4, 39.3]
+    },
+    "monitoringVehicle": {
+      "efficiency": 98,
+      "signalStrength": 95,
+      "coverage": 95,
+      "dataTransmission": 1024,
+      "status": "working",
+      "coordinates": [108.2, 39.1]
+    },
+    "waterTruck": {
+      "efficiency": 90,
+      "waterLevel": 80,
+      "pressure": 75,
+      "sprayRate": 2.5,
+      "status": "working",
+      "coordinates": [108.0, 38.9]
+    }
+  },
+  "productionData": {
+    "dailyProgress": {
+      "grassSquares": [45, 52, 48, 65, 58, 72, 85],
+      "area": [450, 520, 480, 650, 580, 720, 850],
+      "efficiency": [78, 82, 75, 88, 85, 92, 95]
+    },
+    "weeklyProgress": {
+      "grassSquares": [320, 385, 412, 468, 495, 523, 578],
+      "area": [3200, 3850, 4120, 4680, 4950, 5230, 5780],
+      "efficiency": [75, 78, 82, 85, 87, 89, 92]
+    },
+    "materialConsumption": {
+      "wheatStraw": 85,
+      "riceStraw": 120,
+      "reed": 65,
+      "fixingPosts": 200,
+      "wireNet": 45
+    },
+    "qualityMetrics": {
+      "sandFixingEffect": 95,
+      "gridUniformity": 88,
+      "materialUtilization": 92,
+      "durability": 87
+    }
+  },
+  "alertData": {
+    "critical": [
+      {
+        "id": 1,
+        "type": "equipment",
+        "message": "压实机-04温度过高",
+        "timestamp": "2024-04-26T14:28:55",
+        "severity": "high"
+      }
+    ],
+    "warnings": [
+      {
+        "id": 2,
+        "type": "battery",
+        "message": "运输车-02电量低于50%",
+        "timestamp": "2024-04-26T14:31:42",
+        "severity": "medium"
+      },
+      {
+        "id": 3,
+        "type": "weather",
+        "message": "风速超过安全阈值",
+        "timestamp": "2024-04-26T14:25:18",
+        "severity": "medium"
+      }
+    ],
+    "info": [
+      {
+        "id": 4,
+        "type": "system",
+        "message": "系统自检完成，所有模块正常",
+        "timestamp": "2024-04-26T14:30:18",
+        "severity": "low"
+      }
+    ]
+  },
+  "gpsData": {
+    "workArea": {
+      "center": [108.2, 39.1],
+      "bounds": [[108.0, 38.9], [108.4, 39.3]],
+      "completedAreas": [
+        [[108.0, 38.9], [108.1, 38.9], [108.1, 39.0], [108.0, 39.0]],
+        [[108.1, 38.9], [108.2, 38.9], [108.2, 39.0], [108.1, 39.0]]
+      ],
+      "plannedAreas": [
+        [[108.2, 38.9], [108.3, 38.9], [108.3, 39.0], [108.2, 39.0]],
+        [[108.3, 38.9], [108.4, 38.9], [108.4, 39.0], [108.3, 39.0]]
+      ]
+    }
+  },
+  "timestamp": "2024-04-26T14:35:00Z"
+}

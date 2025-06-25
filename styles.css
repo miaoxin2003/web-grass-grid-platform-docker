@@ -13,15 +13,16 @@ body {
         radial-gradient(circle at 50% 50%, rgba(45, 53, 97, 0.1) 0%, transparent 70%),
         linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d3561 100%);
     color: #ffffff;
-    overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden; /* 只隐藏横向滚动条 */
+    overflow-y: auto;   /* 允许纵向滚动 */
+    min-height: 100vh;  /* 改为最小高度，允许内容超出时滚动 */
     background-attachment: fixed;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh; /* 改为最小高度，允许内容超出时滚动 */
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
 }

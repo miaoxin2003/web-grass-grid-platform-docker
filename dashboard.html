@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="icons.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="js/data-manager.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
@@ -126,6 +127,35 @@
                 </div>
             </section>
 
+            <!-- 新增：环境监测图表区域 -->
+            <section class="charts-row">
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>环境参数监测</h3>
+                        <div class="status-indicator">
+                            <span class="device-indicator online"></span>
+                            多参数实时监测
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="environmentChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>生产数据统计</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn active" data-chart="production">产量</button>
+                            <button class="control-btn" data-chart="efficiency">效率</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="productionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
             <!-- 第三行：铺设进度图表 -->
             <section class="charts-row">
                 <div class="chart-panel">
@@ -151,6 +181,35 @@
                     </div>
                     <div class="chart-container">
                         <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 新增：质量监测和警报统计 -->
+            <section class="charts-row">
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>质量指标监测</h3>
+                        <div class="status-indicator">
+                            <span class="device-indicator online"></span>
+                            质量评估中
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="qualityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-panel">
+                    <div class="panel-header">
+                        <h3>系统警报统计</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn active" data-alert="today">今日</button>
+                            <button class="control-btn" data-alert="week">本周</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="alertChart"></canvas>
                     </div>
                 </div>
             </section>
