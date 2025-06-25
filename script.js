@@ -421,7 +421,16 @@ function setupEventListeners() {
     // 操作按钮
     document.querySelectorAll('.op-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            handleOperationClick(this.textContent);
+            // 清理文本内容，去除图标和多余空格
+            const cleanText = this.textContent.trim().replace(/^\s*\S+\s*/, '').trim();
+            const buttonText = cleanText || this.textContent.trim();
+
+            // 特殊处理数据监控面板按钮
+            if (this.classList.contains('dashboard-btn') || buttonText.includes('数据监控面板')) {
+                handleOperationClick('数据监控面板');
+            } else {
+                handleOperationClick(buttonText);
+            }
         });
     });
 
@@ -570,7 +579,10 @@ function handleOperationClick(operation) {
             showModal('设备控制', createDeviceControlContent());
             break;
         case '数据监测':
-            showModal('数据监测', createDataMonitorContent());
+        case '数据监控面板':
+            // 跳转到数据监控面板
+            console.log('跳转到数据监控面板...');
+            window.open('dashboard.html', '_blank');
             break;
         case '人员配置':
             showModal('人员配置', createPersonnelContent());
