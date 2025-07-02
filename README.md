@@ -47,20 +47,36 @@
 
 ```
 草方格铺设设备云平台/
-├── index.html          # 主页面 - 3D地形和设备展示
-├── dashboard.html      # 数据监控面板 - 图表分析
-├── demo.html          # 功能演示页面 - 交互测试
-├── test_features.html  # 功能测试页面 - 改进总结
-├── styles.css         # 主样式文件 - 全局样式
-├── dashboard.css      # 仪表板样式 - 专用样式
-├── icons.css          # 图标样式 - 自定义图标
-├── script.js          # 主JavaScript - 3D渲染和交互
-├── dashboard.js       # 仪表板JavaScript - 图表和数据
-└── README.md          # 项目说明文档
+├── 📄 主要页面
+│   ├── index.html              # 主页面 - 3D地形和设备展示
+│   └── dashboard.html          # 数据监控面板 - 图表分析
+├── 🎨 样式文件
+│   ├── styles.css              # 主样式文件 - 全局样式
+│   ├── dashboard.css           # 仪表板样式 - 专用样式
+│   └── icons.css               # 图标样式 - 自定义图标
+├── ⚙️ 脚本文件
+│   ├── script.js               # 主JavaScript - 3D渲染和交互
+│   └── dashboard.js            # 仪表板JavaScript - 图表和数据
+├── 📊 数据管理
+│   ├── data/
+│   │   └── monitoring-data.json # 模拟数据库
+│   └── js/
+│       └── data-manager.js     # 数据管理器
+├── 🐳 Docker部署
+│   ├── Dockerfile              # Docker镜像构建文件
+│   ├── Dockerfile.fixed        # 修复版本Dockerfile
+│   ├── nginx-simple.conf       # Nginx配置文件
+│   ├── docker-compose.yml      # Docker Compose配置
+│   └── DOCKER_USAGE.md         # Docker使用说明
+└── 📚 文档
+    ├── README.md               # 项目说明文档
+    ├── CHANGELOG.md            # 更新日志
+    └── 启动服务器.bat           # 本地启动脚本
 ```
 
 ## 🛠️ 技术栈
 
+### 前端技术
 - **前端框架**: 原生HTML5 + CSS3 + JavaScript ES6+
 - **3D图形引擎**: Three.js r128 - 3D地形渲染和设备模型
 - **图表可视化**: Chart.js 3.9.1 - 专业数据图表
@@ -69,11 +85,29 @@
 - **样式特性**: CSS Grid, Flexbox, CSS3动画, 渐变效果
 - **响应式设计**: 媒体查询, 弹性布局
 
+### 部署技术
+- **容器化**: Docker + Docker Compose
+- **Web服务器**: Nginx (生产环境)
+- **镜像仓库**: Docker Hub
+- **部署平台**: 支持各种云平台和容器编排系统
+
 ## 🚀 快速开始
 
 ### 1. 部署方式
 
-#### 本地部署
+#### 🐳 Docker部署（推荐）
+```bash
+# 方式1：直接运行
+docker run -d -p 8080:80 --name grass-grid-platform baishui2003/grass-grid-platform:latest
+
+# 方式2：使用docker-compose
+docker-compose up -d
+
+# 访问应用
+# 浏览器打开: http://localhost:8080
+```
+
+#### 💻 本地部署
 ```bash
 # 克隆或下载文件到本地
 # 使用任意HTTP服务器运行，例如：
@@ -84,19 +118,20 @@ python -m http.server 8000
 # Node.js (需要安装http-server)
 npx http-server
 
-# 或者直接用浏览器打开 test_features.html 查看功能总览
+# Windows快速启动
+双击运行 启动服务器.bat
 ```
 
-#### 在线部署
+#### ☁️ 在线部署
 - 上传到任意Web服务器
 - 支持GitHub Pages、Netlify、Vercel等静态托管平台
+- 支持各种云服务器和容器平台
 
 ### 2. 访问页面
 
 - **主页面**: `index.html` - 3D地形和设备监控
-- **数据面板**: `dashboard.html` - 详细图表分析  
-- **功能演示**: `demo.html` - 交互功能测试
-- **功能总览**: `test_features.html` - 改进说明和快速导航
+- **数据面板**: `dashboard.html` - 详细图表分析
+- **Docker使用**: 查看 `DOCKER_USAGE.md` 了解详细部署说明
 
 ## 📖 使用指南
 
@@ -157,69 +192,44 @@ npx http-server
 - **趋势分析**: 进度对比、效率变化、材料消耗
 - **报告生成**: 数据导出、图表保存、统计报告
 
-# 然后访问 http://localhost:8000
-```
-
-#### Web服务器部署
-将所有文件上传到Web服务器根目录即可直接访问。
-
-### 2. 浏览器兼容性
+### 3. 浏览器兼容性
 
 - Chrome 60+
 - Firefox 55+
 - Safari 12+
 - Edge 79+
 
-## 使用指南
+## 🐳 Docker部署详情
 
-### 主页面功能
+### Docker Hub镜像
+- **镜像地址**: `baishui2003/grass-grid-platform:latest`
+- **镜像大小**: 约 50MB
+- **基础镜像**: nginx:latest
 
-#### 左侧控制面板
-- **工作流程**: 切换不同的预设工作方案
-- **数据管理**: 浏览历史数据缩略图
+### 快速部署命令
+```bash
+# 拉取并运行
+docker pull baishui2003/grass-grid-platform:latest
+docker run -d -p 8080:80 --name grass-grid-platform baishui2003/grass-grid-platform:latest
 
-#### 中央3D显示区
-- **地形展示**: 3D沙漠地形模型
-- **设备标记**: 点击设备标记查看详情
-- **相机控制**: 自动旋转视角
+# 访问应用
+http://localhost:8080
+```
 
-#### 右侧信息面板
-- **产品详情**: 实时显示原料统计数据
-- **操作平台**: 设备控制、数据监测、人员配置
+### 管理命令
+```bash
+# 查看容器状态
+docker ps
 
-#### 底部状态栏
-- **连接状态**: 系统连接状态
-- **设备电量**: 整体设备电量状态
-- **环境温度**: 当前环境温度
+# 查看日志
+docker logs grass-grid-platform
 
-### 数据监控面板
+# 停止/重启容器
+docker stop grass-grid-platform
+docker restart grass-grid-platform
+```
 
-#### 关键指标
-- 设备总数、运行设备数量
-- 告警数量、工作效率统计
-
-#### 图表分析
-- **原料余量**: 柱状图显示各类原料库存
-- **风速监测**: 实时风速变化曲线
-- **设备导航**: 散点图显示设备位置分布
-
-#### 设备状态
-- 实时设备列表，显示运行状态
-- 电量、温度等关键参数监控
-
-#### 系统日志
-- 实时系统日志显示
-- 支持日志级别筛选
-- 自动滚动更新
-
-### 快捷键
-
-| 快捷键 | 功能 |
-|--------|------|
-| F1 | 显示帮助信息 |
-| F5 | 刷新页面 |
-| Ctrl+D | 打开数据监控面板 |
-| Esc | 关闭模态窗口 |
+详细的Docker使用说明请查看 `DOCKER_USAGE.md` 文件。
 
 ## 自定义配置
 
@@ -323,14 +333,39 @@ async function fetchRealTimeData() {
 }
 ```
 
-## 许可证
+## 📦 项目特色
+
+### 🌟 技术亮点
+- **专业性强**: 针对草方格铺设的专业解决方案
+- **技术先进**: 现代Web技术栈，3D可视化效果出色
+- **容器化部署**: 支持Docker一键部署，便于扩展和维护
+- **数据丰富**: 多维度数据监控，信息全面
+- **用户友好**: 直观的界面设计，操作简单
+
+### 🚀 部署优势
+- **快速部署**: Docker一键部署，几分钟即可上线
+- **跨平台**: 支持Windows、Linux、macOS等多种平台
+- **易于扩展**: 容器化架构，便于水平扩展
+- **高可用**: 支持负载均衡和集群部署
+
+## 📞 支持与反馈
+
+### Docker Hub
+- **镜像地址**: https://hub.docker.com/r/baishui2003/grass-grid-platform
+- **标签说明**:
+  - `latest` - 最新稳定版本
+  - `fixed` - 修复版本
+  - `v1.0` - 版本1.0
+
+### 使用帮助
+- 查看 `DOCKER_USAGE.md` 了解详细的Docker部署说明
+- 查看 `数据检测功能说明.md` 了解数据监控功能
+- 查看 `数据面板跳转功能说明.md` 了解页面跳转功能
+
+## 📄 许可证
 
 本项目采用 MIT 许可证。
 
-## 联系方式
-
-如有问题或建议，请联系开发团队。
-
 ---
 
-**注意**: 这是一个演示项目，实际部署时请根据具体需求进行调整和优化。
+**注意**: 这是一个演示项目，展示了现代Web技术在工业物联网领域的应用。实际部署时请根据具体需求进行调整和优化。
